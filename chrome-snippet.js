@@ -21,11 +21,13 @@
         const [artist, title] = ['.audio_row__performers', '.audio_row__title']
           .map(selector => row.querySelector(selector)?.textContent || '')
           .map((v) => v.replace(/[\s\n ]+/g, ' ').trim());
-
-        return [artist, title].join(' - ');
+        const href = row.querySelector('.audio_row__title_inner')?.getAttribute('href') || '';
+        const audio_id = (href.match(/audio-\d+_\d+/) || [])[0] || '';
+        return `${artist} - ${title} : ${audio_id}`;
       },
     );
   }
+  
 
   function saveToFile(filename, content) {
     const data = content.replace(/\n/g, '\r\n');
